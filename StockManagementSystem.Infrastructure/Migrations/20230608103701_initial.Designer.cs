@@ -12,8 +12,8 @@ using StockManagementSystem.Infrastructure.DbContext;
 namespace StockManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230526143949_new_tbl_new_fld_added")]
-    partial class new_tbl_new_fld_added
+    [Migration("20230608103701_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -309,7 +309,7 @@ namespace StockManagementSystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("StockManagementSystem.Core.Domains.CustomerProductPrice", b =>

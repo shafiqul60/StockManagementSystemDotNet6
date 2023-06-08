@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <input type="hidden" asp-for="CreatedBy" class="form-control" />
-                <input type="hidden" asp-for="Id" class="form-control" />
+                <input type="hidden" asp-for="Id" value="@ViewBag.ProductId" class="form-control" />
                 <input type="hidden" asp-for="CreatedDate" class="form-control" />
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>

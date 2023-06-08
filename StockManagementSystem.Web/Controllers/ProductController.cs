@@ -82,15 +82,16 @@ namespace StockManagementSystem.Web.Controllers
         public async Task<IActionResult> Update(string Id)
         {
             ViewBag.CategoryList = await _categoryService.GetActiveCategory();
-            int ProductId = Convert.ToInt32(_protector.Unprotect(Id));
+            int RouteId = Convert.ToInt32(_protector.Unprotect(Id));
 
-            var item = await _productService.GetProduct(ProductId);
+            var item = await _productService.GetProduct(RouteId);
 
             if (item == null)
             {
                 return NotFound();
             }
             var itemVm = _mapper.Map<UpdateProductVm>(item);
+            ViewBag.ProductId = item.Id;
             return View(itemVm);
 
 
@@ -102,7 +103,6 @@ namespace StockManagementSystem.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                model.Id =Convert.ToInt32(_protector.Unprotect(model.Id.ToString()));
                 var fromVm = _mapper.Map<Product>(model);
                 fromVm.UpdatedBy = "Shafiqul";
                 fromVm.UpdatedDate = DateTime.Now;
