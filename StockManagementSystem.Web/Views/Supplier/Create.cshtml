@@ -1,0 +1,55 @@
+﻿@model StockManagementSystem.Core.DTO.SupplierVm
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row vh-100  rounded align-items-center justify-content-center mx-0">
+        <div class="col-md-6">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Supplier Create</h6>
+                <form asp-action="Create">
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label">Supplier Name</label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="form-text text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Address" class="form-label">Supplier Address</label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="form-text text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ContactNumber" class="form-label">Contact Number</label>
+                        <input asp-for="ContactNumber" class="form-control" />
+                        <span asp-validation-for="ContactNumber" class="form-text text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="TelephoneNumber" class="form-label">Telephone Number</label>
+                        <input asp-for="TelephoneNumber" class="form-control" />
+                        <span asp-validation-for="TelephoneNumber" class="form-text text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label">Email</label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="form-text text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="IsActive" class="form-label">Active Status</label>
+                        <input type="checkbox" asp-for="IsActive" class="form-check-input" />
+                        <span asp-validation-for="IsActive" class="form-text text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

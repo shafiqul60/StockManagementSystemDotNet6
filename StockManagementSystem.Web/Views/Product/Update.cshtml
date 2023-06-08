@@ -1,0 +1,92 @@
+﻿@model StockManagementSystem.Core.DTO.UpdateProductVm
+
+@{
+    ViewData["Title"] = "Product Update";
+}
+
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row vh-100  rounded align-items-center justify-content-center mx-0">
+        <div class="bg-secondary rounded h-auto p-4">
+            <h6 class="mb-4">Product Create</h6>
+            <form asp-action="Update">
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="mb-3">
+                            <label asp-for="CategoryId" class="form-label">Categorie Name</label>
+                            @Html.DropDownListFor(m => m.CategoryId, new SelectList(ViewBag.CategoryList, "Id", "CategoryName"), "-- Please Category --", new { @id = "", @class = "form-select" })
+                            <span asp-validation-for="CategoryId" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">Product Name</label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="mb-3">
+                            <label asp-for="Unit" class="form-label">Unit</label>
+                            <input asp-for="Unit" class="form-control" />
+                            <span asp-validation-for="Unit" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="mb-3">
+                            <label asp-for="Price" class="form-label">Price</label>
+                            <input asp-for="Price" class="form-control" />
+                            <span asp-validation-for="Price" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="mb-3">
+                            <label asp-for="IdealQuantity" class="form-label">Ideal Quantity</label>
+                            <input asp-for="IdealQuantity" class="form-control" />
+                            <span asp-validation-for="IdealQuantity" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="mb-3">
+                            <label asp-for="Remarks" class="form-label">Remarks</label>
+                            <textarea asp-for="Remarks" class="form-control" rows="2"></textarea>
+                            <span asp-validation-for="Remarks" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+
+                        <div class="mb-3">
+                            <label asp-for="IsActive" class="form-label">Active Status</label>
+                            <input type="checkbox" asp-for="IsActive" class="form-check-input" />
+                            <span asp-validation-for="IsActive" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" asp-for="CreatedBy" class="form-control" />
+                <input type="hidden" asp-for="Id" class="form-control" />
+                <input type="hidden" asp-for="CreatedDate" class="form-control" />
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

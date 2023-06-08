@@ -1,0 +1,40 @@
+﻿@model StockManagementSystem.Core.DTO.CustomerProductPriceVm
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row vh-100  rounded align-items-center justify-content-center mx-0">
+        <div class="col-md-6">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Create Customer Wise Price</h6>
+                <form asp-action="Create">
+                    <div class="mb-3">
+                        <label asp-for="CustomerId" class="form-label">Customer Name</label>
+                        @Html.DropDownListFor(m => m.CustomerId, new SelectList(ViewBag.CustomerList, "Id", "Name"), "-- Please Select Customer --", new { @id = "", @class = "form-select" })
+                        <span asp-validation-for="CustomerId" class="form-text text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ProductId" class="form-label">Category Name</label>
+                        @Html.DropDownListFor(m => m.ProductId, new SelectList(ViewBag.ProductList, "Id", "Name"), "-- Please Select Product --", new { @id = "", @class = "form-select" })
+                        <span asp-validation-for="ProductId" class="form-text text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Price" class="form-label">Active Status</label>
+                        <input type="number" asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="form-text text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

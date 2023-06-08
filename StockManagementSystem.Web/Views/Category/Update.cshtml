@@ -1,0 +1,42 @@
+﻿@model StockManagementSystem.Core.DTO.UpdateCategoryVm
+
+@{
+    ViewData["Title"] = "Category Update";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row vh-100  rounded align-items-center justify-content-center mx-0">
+        <div class="col-md-6">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Category Update</h6>
+                <form asp-action="Update">
+                    <div class="mb-3">
+                        <label asp-for="CategoryName" class="form-label">Category Name</label>
+                        <input asp-for="CategoryName" class="form-control" />
+                        <span asp-validation-for="CategoryName" class="form-text text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="IsActive" class="form-label">Active Status</label>
+                        <input type="checkbox" asp-for="IsActive" class="form-check-input">
+                        <span asp-validation-for="IsActive" class="form-text text-danger"></span>
+                    </div>
+
+                    <input type="hidden" asp-for="CreatedBy" class="form-control" />
+                    <input type="hidden" asp-for="Id" class="form-control" />
+                    <input type="hidden" asp-for="CreatedDate" class="form-control" />
+
+                    <button type="submit" class="btn btn-primary">Update</button>
+
+                 
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

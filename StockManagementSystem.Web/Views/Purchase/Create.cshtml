@@ -1,0 +1,111 @@
+﻿@model StockManagementSystem.Core.Domains.Purchase
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row vh-100  rounded align-items-center justify-content-center mx-0">
+        <div class="bg-secondary rounded h-auto p-4">
+            <h6 class="mb-4">Pruchase</h6>
+            <form asp-action="Create">
+
+                <div class="row">
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                        <div class="mb-3">
+                            <label asp-for="SupplierId" class="form-label">Supplier Name</label>
+                            @Html.DropDownListFor(m => m.SupplierId, new SelectList(ViewBag.SupplierList, "Id", "Name"), "-- Please Select Supplier --", new { @id = "", @class = "form-select" })
+                            <span asp-validation-for="SupplierId" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                        <div class="mb-3">
+                            <label asp-for="ChallanNo" class="form-label">Challan No</label>
+                            <input asp-for="ChallanNo" class="form-control" />
+                            <span asp-validation-for="ChallanNo" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                        <div class="mb-3">
+                            <label asp-for="ChallanDate" class="form-label">Challan Date</label>
+                            <input type="date" asp-for="ChallanDate" class="form-control" />
+                            <span asp-validation-for="ChallanDate" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                        <div class="mb-3">
+                            <label asp-for="ChallanStatus" class="form-label">Placed</label>
+                            <input type="checkbox" asp-for="ChallanStatus" class="form-check-input" />
+                            <span asp-validation-for="ChallanStatus" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+               
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row vh-100  rounded align-items-center justify-content-center mx-0">
+        <div class="bg-secondary rounded h-auto p-4">
+            <h6 class="mb-4">Add Product Item</h6>            
+                <div class="row">
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                        <div class="mb-3">
+                            <label class="form-label">Categorie Name</label>
+                            @Html.DropDownList("inptCategoryId", new SelectList(ViewBag.CategoryList, "Id", "CategoryName"), "-- Please Category --", new { @id = "", @class = "form-select" })
+                            <span class="form-text text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                        <label class="form-label">Categorie Name</label>
+                    @Html.DropDownList("inptProductId", new SelectList(ViewBag.ProductList, "Id", "Name"), "-- Please Select Product --", new { @id = "", @class = "form-select" })
+                        <span class="form-text text-danger"></span>
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                        <div class="mb-3">
+                            <label class="form-label">Unit</label>
+                            <input type="text" id="inptUnit" class="form-control" />
+                            <span class="form-text text-danger"></span>
+                        </div>
+                    </div>                  
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                        <div class="mb-3">
+                            <label class="form-label">Quantity</label>
+                        <input type="number" id="inptQuantity" class="form-control" />
+                            <span class="form-text text-danger"></span>
+                        </div>
+                    </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <div class="mb-3">
+                        <label class="form-label">UnitPrice</label>
+                        <input type="number" id="inptPrice" class="form-control" />
+                        <span class="form-text text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+                </div>
+
+
+               
+            
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
