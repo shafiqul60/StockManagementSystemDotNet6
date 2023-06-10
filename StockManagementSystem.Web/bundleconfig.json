@@ -1,0 +1,26 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/Theme/css/style.css",
+      "wwwroot/Theme/css/bootstrap.min.css",
+      "wwwroot/Theme/lib/owlcarousel/assets/owl.carousel.min.css",
+      "wwwroot/Theme/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+
+  {
+    "outputFileName": "wwwroot/js/site.js",
+    "inputFiles": [
+      "wwwroot/Theme/js/main.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  }
+]

@@ -27,7 +27,8 @@ namespace StockManagementSystem.Core.Domains
         [RegularExpression(@"^(\+?880|0)1[13456789][0-9]{8}$", ErrorMessage = "Please enter a valid Bangladeshi telephone number.")]
         public string? TelephoneNumber { get; set; }
 
-        [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Please Enter Correct Email")]
+        [EmailAddress]
+        //[RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Please Enter Correct Email")]
         public string? Email { get; set; }
 
         [Required]
