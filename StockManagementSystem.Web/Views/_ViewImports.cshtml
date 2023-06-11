@@ -1,4 +1,9 @@
 ﻿@using StockManagementSystem.Web
 @using StockManagementSystem.Web.Models
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!--  SRI hash for client librarie -->
 @using Boxed.AspNetCore.TagHelpers
+
+@*Rin – Request/Response Inspector Middleware debug application more efficiently.*@
+@inject Rin.Mvc.View.RinHelperService RinHelper

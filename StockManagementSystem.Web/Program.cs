@@ -14,6 +14,14 @@ using WebMarkupMin.AspNetCore6;
 var builder = WebApplication.CreateBuilder(args);
 
 
+
+
+//Rin – Request/Response Inspector Middleware debug application more efficiently
+builder.Logging.AddRinLogger();
+builder.Services.AddRazorPages().AddRinMvcSupport();
+builder.Services.AddRin();
+
+
 // Html minification.
 builder.Services.AddWebMarkupMin().AddHtmlMinification(option =>
 {
@@ -29,6 +37,7 @@ builder.WebHost.ConfigureKestrel(serverOption =>
 {
     serverOption.AddServerHeader = false;
 });
+
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -81,7 +90,7 @@ builder.Services.AddAutoMapper(typeof(MapConfig));
 
 
 
-//If you receive an error regarding the IActionContextAccessor dependency, you should register it in the Program or Startup class:
+//If you receive an error regarding the IActionContextAccessor dependency, you should register it in the Program or Startup class
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
 
@@ -93,6 +102,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    //Rin – Request/Response Inspector Middleware debug application more efficiently
+    app.UseRin();
+    app.UseRinMvcSupport();
+    app.UseRinDiagnosticsHandler();
 }
 else
 {
@@ -116,7 +129,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
-
 
 
 app.Run();

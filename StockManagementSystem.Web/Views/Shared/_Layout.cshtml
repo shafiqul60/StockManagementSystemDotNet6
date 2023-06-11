@@ -225,6 +225,7 @@
 
 
     <!-- JavaScript Libraries -->
+    <!--  SRI hash for client librarie -->
     <script 
         src="https://code.jquery.com/jquery-3.4.1.min.js"
         asp-subresource-integrity-src="~/cdnlocal/jquery-3.4.1.min.js"
@@ -264,6 +265,11 @@
     <!-- DotNet6 --> 
     @await RenderSectionAsync("Scripts", required: false)
     @await Component.InvokeAsync("Notyf")
+
+    <!-- Rin – Request/Response Inspector Middleware debug application more efficiently.-->
+    <environment include="Development">
+        @RinHelper.RenderInViewInspector()
+    </environment>
 </body>
 
 </html>
