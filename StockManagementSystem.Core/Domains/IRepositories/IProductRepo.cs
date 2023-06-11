@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StockManagementSystem.Core.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,7 @@ namespace StockManagementSystem.Core.Domains.IRepositories
     public interface IProductRepo : IGenericRepo<Product>    
     {
        Task<List<Product>> GetProductsWithCategory();
+
+       Task<List<ProductListVm>> GetAllProductsBySp();
     }
 }

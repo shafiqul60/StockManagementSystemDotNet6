@@ -38,7 +38,8 @@ namespace StockManagementSystem.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var TypeList = await _productService.GetProductsWithCategory();
+            //var TypeList = await _productService.GetProductsWithCategory();
+            var TypeList = await _productService.GetAllProductBySp();
             var ListVm = _mapper.Map<List<ProductListVm>>(TypeList);
             var list = ListVm.Select(e => {
                 e.EncryptedtId = _protector.Protect(e.Id.ToString());

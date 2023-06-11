@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StockManagementSystem.Core.Domains;
 using StockManagementSystem.Core.Domains.IRepositories;
+using StockManagementSystem.Core.DTO;
 using StockManagementSystem.Infrastructure.DbContext;
 using System;
 using System.Collections.Generic;
@@ -22,5 +23,13 @@ namespace StockManagementSystem.Infrastructure.Repositories
         {
             return await _db.Products.Include(p => p.Category).ToListAsync();  
         }
+
+        public async Task<IQueryable<ProductListVm>> GetAllProductsBySp()
+        {
+            var productList = await _db.Database.ExecuteSqlRawAsync("exec [dbo].[SP_GetAllProduct]");
+
+            return null;
+        }
+
     }
 }
