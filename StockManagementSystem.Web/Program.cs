@@ -1,5 +1,6 @@
 using AspNetCoreHero.ToastNotification;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using StockManagementSystem.Core.Domains.IRepositories;
 using StockManagementSystem.Core.IServices;
@@ -77,6 +78,11 @@ builder.Services.AddScoped<ICustomerProductPriceService, CustomerProductPriceSer
 
 //AutoMapper Config
 builder.Services.AddAutoMapper(typeof(MapConfig));
+
+
+
+//If you receive an error regarding the IActionContextAccessor dependency, you should register it in the Program or Startup class:
+builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
 
 var app = builder.Build();
