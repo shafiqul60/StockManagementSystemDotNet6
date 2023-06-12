@@ -12,12 +12,11 @@ namespace StockManagementSystem.Core.DTO
     public class ProductListVm
     {
         public int Id { get; set; }
-        public string EncryptedtId { get; set; }
 
         [DisplayName("Product Name")]
-        public string Name { get; set; }
+        public string ProductName { get; set; }
         [DisplayName("Product Category")]
-         public Category Category { get; set; }
+         public string CategoryName { get; set; }
 
         public string Unit { get; set; }
         

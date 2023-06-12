@@ -24,11 +24,11 @@ namespace StockManagementSystem.Infrastructure.Repositories
             return await _db.Products.Include(p => p.Category).ToListAsync();  
         }
 
-        public async Task<IQueryable<ProductListVm>> GetAllProductsBySp()
+        public async Task<List<ProductListVm>> GetAllProductsBySp()
         {
-            var productList = await _db.Database.ExecuteSqlRawAsync("exec [dbo].[SP_GetAllProduct]");
+            var productList = await _db.ProductListVm.FromSqlRaw("exec SP_GetAllProduct").ToListAsync();
 
-            return null;
+            return productList;
         }
 
     }

@@ -40,12 +40,12 @@ namespace StockManagementSystem.Web.Controllers
         {
             //var TypeList = await _productService.GetProductsWithCategory();
             var TypeList = await _productService.GetAllProductBySp();
-            var ListVm = _mapper.Map<List<ProductListVm>>(TypeList);
-            var list = ListVm.Select(e => {
-                e.EncryptedtId = _protector.Protect(e.Id.ToString());
-                return e;
-            });
-            return View(list);
+            //var ListVm = _mapper.Map<List<ProductListVm>>(TypeList);
+            //var list = ListVm.Select(e => {
+            //    e.EncryptedtId = _protector.Protect(e.Id.ToString());
+            //    return e;
+            //});
+            return View(TypeList);
         }
 
 

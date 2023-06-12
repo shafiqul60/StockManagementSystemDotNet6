@@ -22,10 +22,10 @@
                             <tr>
 
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Category.CategoryName)
+                                    @Html.DisplayNameFor(model => model.CategoryName)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Name)
+                                    @Html.DisplayNameFor(model => model.ProductName)
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Unit)
@@ -47,10 +47,10 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                                        @Html.DisplayFor(modelItem => item.CategoryName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Name)
+                                        @Html.DisplayFor(modelItem => item.ProductName)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Unit)
@@ -74,8 +74,8 @@
                                         }
                                     </td>
                                     <td>
-                                        <a asp-action="Update" class="btn btn-info" asp-route-id="@item.EncryptedtId"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
-                                        <button type="submit" class="btnDelete btn btn-warning" data-id="@item.EncryptedtId"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                        <a asp-action="Update" class="btn btn-info" asp-route-id="@item.Id"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
+                                        <button type="submit" class="btnDelete btn btn-warning" data-id="@item.Id"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                     </td>
                                 </tr>
                             }
