@@ -19,6 +19,7 @@ namespace StockManagementSystem.Web.Controllers
         private readonly IMapper _mapper;
         private readonly INotyfService _notyf;
         private readonly IDataProtector _protector;
+        private int RouteId;
 
         public ProductController(
             IDataProtectionProvider dataProtectionProvider,
@@ -38,13 +39,8 @@ namespace StockManagementSystem.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //var TypeList = await _productService.GetProductsWithCategory();
-            var TypeList = await _productService.GetAllProductBySp();
-            //var ListVm = _mapper.Map<List<ProductListVm>>(TypeList);
-            //var list = ListVm.Select(e => {
-            //    e.EncryptedtId = _protector.Protect(e.Id.ToString());
-            //    return e;
-            //});
+
+            var TypeList = await _productService.GetAllProductBySp();            
             return View(TypeList);
         }
 
@@ -80,11 +76,14 @@ namespace StockManagementSystem.Web.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Update(string Id)
+        public async Task<IActionResult> Update(string? Id)
         {
             ViewBag.CategoryList = await _categoryService.GetActiveCategory();
-            int RouteId = Convert.ToInt32(_protector.Unprotect(Id));
 
+            if( Id is not null)
+            {
+                RouteId = Convert.ToInt32(_protector.Unprotect(Id));
+            }
             var item = await _productService.GetProduct(RouteId);
 
             if (item == null)
@@ -122,14 +121,22 @@ namespace StockManagementSystem.Web.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string Id)
+        public async Task<IActionResult> DeleteConfirmed(string? Id)
         {
-            int ProductId = Convert.ToInt32(_protector.Unprotect(Id));
+            if (Id is not null)
+            {
+                RouteId = Convert.ToInt32(_protector.Unprotect(Id));
+            }
 
-            var isDelete = await _productService.DeleteProduct(ProductId);
+            var isDelete = await _productService.DeleteProduct(RouteId);
             if (isDelete)
             {
                 _notyf.Success("Category Successfully Delete");
+            }
+            else
+            {
+                _notyf.Warning("Somthing is wrong");
+
             }
             return RedirectToAction("Index");
 

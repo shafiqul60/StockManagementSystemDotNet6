@@ -15,8 +15,6 @@ namespace StockManagementSystem.Core.IServices
         Task<Product> GetProduct(int? Id);
         Task<bool> UpdateProduct(Product model);
         Task<bool> DeleteProduct(int id);
-        Task<List<Product>> GetProductsWithCategory();
-
-        Task<List<ProductListVm>> GetAllProductBySp();
+        Task<IEnumerable<ProductListVm>> GetAllProductBySp();
     }
 }

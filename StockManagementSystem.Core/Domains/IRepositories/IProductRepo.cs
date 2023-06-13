@@ -9,8 +9,6 @@ namespace StockManagementSystem.Core.Domains.IRepositories
 {
     public interface IProductRepo : IGenericRepo<Product>    
     {
-       Task<List<Product>> GetProductsWithCategory();
-
-       Task<List<ProductListVm>> GetAllProductsBySp();
+       Task<IEnumerable<ProductListVm>> GetAllProductsBySp();
     }
 }

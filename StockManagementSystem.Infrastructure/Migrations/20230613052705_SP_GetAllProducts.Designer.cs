@@ -12,8 +12,8 @@ using StockManagementSystem.Infrastructure.DbContext;
 namespace StockManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230611114810_PRO_GetAllProduct")]
-    partial class PRO_GetAllProduct
+    [Migration("20230613052705_SP_GetAllProducts")]
+    partial class SP_GetAllProducts
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -779,6 +779,43 @@ namespace StockManagementSystem.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Suppliers");
+                });
+
+            modelBuilder.Entity("StockManagementSystem.Core.DTO.ProductListVm", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EncryptedtId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdealQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductListVm");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

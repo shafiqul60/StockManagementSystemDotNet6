@@ -791,6 +791,9 @@ namespace StockManagementSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("EncryptedtId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("IdealQuantity")
                         .HasColumnType("int");
 

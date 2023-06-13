@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.DataProtection;
+using Microsoft.EntityFrameworkCore;
 using StockManagementSystem.Core.Domains;
 using StockManagementSystem.Core.Domains.IRepositories;
 using StockManagementSystem.Core.DTO;
+using StockManagementSystem.Core.Security;
 using StockManagementSystem.Infrastructure.DbContext;
 using System;
 using System.Collections.Generic;
@@ -14,21 +16,28 @@ namespace StockManagementSystem.Infrastructure.Repositories
     public class ProductRepo : GenericRepo<Product>, IProductRepo
     {
         private readonly ApplicationDbContext _db;
-        public ProductRepo(ApplicationDbContext db) : base(db)
-        {
-            _db = db;
-        }
+        private readonly IDataProtector _protector;
+        public ProductRepo(
+                            ApplicationDbContext db, 
+                            IDataProtectionProvider dataProtectionProvider,
+                            DataProtectionPurposeString dataProtectionPurposeString
+                            ) : base(db)
+                            {
+                                _db = db;
+                                _protector = dataProtectionProvider.CreateProtector(dataProtectionPurposeString.MasterKey);
+                            }
 
-        public async Task<List<Product>> GetProductsWithCategory()
-        {
-            return await _db.Products.Include(p => p.Category).ToListAsync();  
-        }
 
-        public async Task<List<ProductListVm>> GetAllProductsBySp()
+        public async Task<IEnumerable<ProductListVm>> GetAllProductsBySp()
         {
-            var productList = await _db.ProductListVm.FromSqlRaw("exec SP_GetAllProduct").ToListAsync();
+            var productList = await _db.ProductListVm.FromSqlRaw("exec SP_GetAllProducts").ToListAsync();
+            var list = productList.Select(e =>
+            {
+                e.EncryptedtId = _protector.Protect(e.Id.ToString());
+                return e;
+            });
 
-            return productList;
+            return list;
         }
 
     }
