@@ -27,7 +27,8 @@ namespace StockManagementSystem.Core.DTO
         public string? Remarks { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
-
-
+        public string Code { get; set; }
+        public string Brand { get; set; }
+        public string Model { get; set; }
     }
 }

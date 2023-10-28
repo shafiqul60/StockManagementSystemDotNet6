@@ -1,14 +1,9 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis;
 using StockManagementSystem.Core.Domains;
 using StockManagementSystem.Core.DTO;
 using StockManagementSystem.Core.IServices;
-using StockManagementSystem.Core.Security;
-using StockManagementSystem.Core.Services;
 
 namespace StockManagementSystem.Web.Controllers
 {
@@ -18,12 +13,8 @@ namespace StockManagementSystem.Web.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
         private readonly INotyfService _notyf;
-        private readonly IDataProtector _protector;
-        private int RouteId;
 
         public ProductController(
-            IDataProtectionProvider dataProtectionProvider,
-            DataProtectionPurposeString dataProtectionPurposeString,
             ICategoryService categoryService, 
             IProductService ProductService, 
             IMapper mapper, 
@@ -33,13 +24,11 @@ namespace StockManagementSystem.Web.Controllers
             _notyf = notyf;
             _mapper = mapper;
             _productService = ProductService;
-            _categoryService = categoryService;
-            _protector = dataProtectionProvider.CreateProtector(dataProtectionPurposeString.MasterKey);
+            _categoryService = categoryService;       
         }
 
         public async Task<IActionResult> Index()
         {
-
             var TypeList = await _productService.GetAllProductBySp();            
             return View(TypeList);
         }
@@ -54,12 +43,12 @@ namespace StockManagementSystem.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ProductVm model)
+        public async Task<IActionResult> Create(ProductCreateVm product)
         {
             if (ModelState.IsValid)
             {
-                var fromVm = _mapper.Map<Product>(model);
-                fromVm.CreatedDate = DateTime.Now;
+                var fromVm = _mapper.Map<Product>(product);
+                fromVm.CreatedDate = DateTime.Now;       
                 fromVm.CreatedBy = "Shafiqul";
                 fromVm.UpdatedBy = "";
                 var isSaved = await _productService.CreateProduct(fromVm);
@@ -70,31 +59,32 @@ namespace StockManagementSystem.Web.Controllers
                 return RedirectToAction("Index");
             }
             _notyf.Warning("Data Validation Error!");
-            return View(model);
+            ViewBag.CategoryList = await _categoryService.GetActiveCategory();
+
+            return View(product);
 
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> Update(string? Id)
+        public async Task<IActionResult> Update(int Id)
         {
             ViewBag.CategoryList = await _categoryService.GetActiveCategory();
 
-            if( Id is not null)
+            if( Id > 0 )
             {
-                RouteId = Convert.ToInt32(_protector.Unprotect(Id));
+                var item = await _productService.GetProduct(Id);
+                if (item == null)
+                {
+                    return NotFound();
+                }
+                var itemVm = _mapper.Map<UpdateProductVm>(item);
+                return View(itemVm);
             }
-            var item = await _productService.GetProduct(RouteId);
-
-            if (item == null)
+            else
             {
                 return NotFound();
             }
-            var itemVm = _mapper.Map<UpdateProductVm>(item);
-            ViewBag.ProductId = item.Id;
-            return View(itemVm);
-
-
         }
 
         [HttpPost]
@@ -121,25 +111,56 @@ namespace StockManagementSystem.Web.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string? Id)
+        public async Task<IActionResult> DeleteConfirmed(int Id)
         {
-            if (Id is not null)
+            if (Id > 0)
             {
-                RouteId = Convert.ToInt32(_protector.Unprotect(Id));
-            }
-
-            var isDelete = await _productService.DeleteProduct(RouteId);
-            if (isDelete)
-            {
-                _notyf.Success("Category Successfully Delete");
-            }
-            else
-            {
-                _notyf.Warning("Somthing is wrong");
-
-            }
+                var isDelete = await _productService.DeleteProduct(Id);
+                if (isDelete)
+                {
+                    _notyf.Success("Category Successfully Delete");
+                }
+                else
+                {
+                    _notyf.Warning("Somthing is wrong");
+                }
+            }   
             return RedirectToAction("Index");
+        }
 
+
+        [HttpGet]
+        public IActionResult UploadFiles()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadFiles(List<IFormFile> files)
+        {
+            if (files == null || files.Count == 0)
+            {
+                // No files were selected
+                return BadRequest("No files selected.");
+            }
+
+            // Process each file
+            foreach (var file in files)
+            {
+                if (file.Length > 0)
+                {
+                    // Perform your file processing logic here
+                    // For example, save the file to disk
+                    var filePath = "path/to/save/file/" + file.FileName;
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                }
+            }
+
+            // Files uploaded successfully
+            return Ok("Files uploaded successfully.");
         }
 
     }

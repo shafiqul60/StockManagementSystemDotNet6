@@ -1,26 +1,30 @@
-﻿using StockManagementSystem.Core.Domains;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace StockManagementSystem.Core.DTO
 {
-    public class ProductVm
+    public class ProductCreateVm
     {
         [Required]
         public string Name { get; set; }
         [Required]
-        public int CategoryId { get; set; }     
+        public int CategoryId { get; set; }
+        public string Brand { get; set; }
+        public string Code { get; set; }
+
+        public string Model { get; set; }
         [Required]
         public string Unit { get; set; }
         [Required]
         public decimal Price { get; set; }
         [Required]
         public int IdealQuantity { get; set; }
+      
         [Required]
         [DisplayName("Active Status")]
         public bool IsActive { get; set; }

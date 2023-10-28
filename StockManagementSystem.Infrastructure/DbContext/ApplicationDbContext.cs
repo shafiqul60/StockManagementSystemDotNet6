@@ -17,9 +17,8 @@ namespace StockManagementSystem.Infrastructure.DbContext
         {
             base.OnModelCreating(builder);
 
-            // Process2
-
-            //builder.Entity<ProductListVm>().HasNoKey().ToView(null);
+            //Process2
+            builder.Entity<ProductListVm>().HasNoKey().ToView(null);
             //builder.Entity<ProductListVm>().ToView(null);
         }
 
@@ -40,10 +39,10 @@ namespace StockManagementSystem.Infrastructure.DbContext
 
         //Using for store procedure
         // Process1
-        [NotMapped]
-        public DbSet<ProductListVm> ProductListVm { get; set; }
-
-        // Process2
+        //[NotMapped]
         //public DbSet<ProductListVm> ProductListVm { get; set; }
+
+        //Process2
+        public DbSet<ProductListVm> ProductListVm { get; set; }
     }
 }

@@ -13,15 +13,12 @@ namespace StockManagementSystem.Core.DTO
     {
         public int Id { get; set; }
 
-        public string? EncryptedtId { get; set; }
-
         [DisplayName("Product Category")]
         public string CategoryName { get; set; }
 
         [DisplayName("Product Name")]
         public string ProductName { get; set; }
        
-
         public string Unit { get; set; }
         
         public decimal Price { get; set; }

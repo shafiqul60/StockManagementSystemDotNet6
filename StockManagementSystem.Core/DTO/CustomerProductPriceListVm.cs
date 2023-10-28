@@ -11,7 +11,7 @@ namespace StockManagementSystem.Core.DTO
     {
         public int Id { get; set; }
         public CustomerVm Customer { get; set; }
-        public ProductVm Product { get; set; }
+        public ProductCreateVm Product { get; set; }
         public decimal Price { get; set; }
     }
 }

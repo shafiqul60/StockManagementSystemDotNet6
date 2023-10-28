@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewData["Title"] = "UploadFiles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>UploadFiles</h1>
+
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="files" multiple>
+    <button type="submit">Upload Files</button>
+</form>

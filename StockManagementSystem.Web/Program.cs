@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using StockManagementSystem.Core.Domains.IRepositories;
 using StockManagementSystem.Core.IServices;
-using StockManagementSystem.Core.Security;
 using StockManagementSystem.Core.Services;
 using StockManagementSystem.Infrastructure.DbContext;
 using StockManagementSystem.Infrastructure.Repositories;
@@ -49,8 +48,6 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
      .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-
-
 builder.Services.AddControllersWithViews();
 
 
@@ -75,10 +72,6 @@ builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
-
-
-
-builder.Services.AddSingleton<DataProtectionPurposeString>();
 
 
 builder.Services.AddScoped<ICustomerProductPriceRepo, CustomerProductPriceRepo>();
