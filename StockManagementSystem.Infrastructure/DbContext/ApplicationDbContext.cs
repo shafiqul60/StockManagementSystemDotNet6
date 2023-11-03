@@ -19,6 +19,7 @@ namespace StockManagementSystem.Infrastructure.DbContext
 
             //Process2
             builder.Entity<ProductListVm>().HasNoKey().ToView(null);
+            builder.Entity<ProductInfoVm>().HasNoKey().ToView(null);
             //builder.Entity<ProductListVm>().ToView(null);
         }
 
@@ -44,5 +45,6 @@ namespace StockManagementSystem.Infrastructure.DbContext
 
         //Process2
         public DbSet<ProductListVm> ProductListVm { get; set; }
+        public DbSet<ProductInfoVm> ProductInfoVm { get; set; }
     }
 }

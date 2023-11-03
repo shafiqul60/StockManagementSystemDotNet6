@@ -54,7 +54,7 @@ namespace StockManagementSystem.Web.Controllers
                 var isSaved = await _productService.CreateProduct(fromVm);
                 if (isSaved)
                 {
-                    _notyf.Success("Category Created Successfully");
+                    _notyf.Success("Product Created Successfully");
                 }
                 return RedirectToAction("Index");
             }
@@ -89,22 +89,23 @@ namespace StockManagementSystem.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(UpdateProductVm model)
+        public async Task<IActionResult> Update(UpdateProductVm product)
         {
             if (ModelState.IsValid)
             {
-                var fromVm = _mapper.Map<Product>(model);
+                var fromVm = _mapper.Map<Product>(product);
                 fromVm.UpdatedBy = "Shafiqul";
                 fromVm.UpdatedDate = DateTime.Now;
                 var isUpdated = await _productService.UpdateProduct(fromVm);
                 if (isUpdated)
                 {
-                    _notyf.Success("Category Successfully Updated");
+                    _notyf.Success("Product Successfully Updated");
                 }
                 return RedirectToAction("Index");
             }
             _notyf.Warning("Data Validation Error!");
-            return View(model);
+            ViewBag.CategoryList = await _categoryService.GetActiveCategory();
+            return View(product);
 
         }
 
@@ -118,7 +119,7 @@ namespace StockManagementSystem.Web.Controllers
                 var isDelete = await _productService.DeleteProduct(Id);
                 if (isDelete)
                 {
-                    _notyf.Success("Category Successfully Delete");
+                    _notyf.Success("Product Successfully Deleted");
                 }
                 else
                 {

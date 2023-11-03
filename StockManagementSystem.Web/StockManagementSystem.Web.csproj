@@ -39,7 +39,6 @@
   <ItemGroup>
     <Folder Include="CustomMiddleware\" />
     <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
 </Project>

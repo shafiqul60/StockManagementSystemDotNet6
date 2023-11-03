@@ -14,8 +14,8 @@
                 <div class="row">
                     <div class="col-sm-6 col-md-4 col-lg-4">
                         <div class="mb-3">
-                            <label asp-for="CategoryId" class="form-label">Categorie Name</label>
-                            @Html.DropDownListFor(m => m.CategoryId, new SelectList(ViewBag.CategoryList, "Id", "CategoryName"), "-- Please Category --", new { @id = "", @class = "form-select" })
+                            <label asp-for="CategoryId" class="form-label">Category Name</label>
+                            @Html.DropDownListFor(m => m.CategoryId, new SelectList(ViewBag.CategoryList, "Id", "CategoryName"), "-- Please Select Category --", new { @id = "", @class = "form-select" })
                             <span asp-validation-for="CategoryId" class="form-text text-danger"></span>
                         </div>
                     </div>

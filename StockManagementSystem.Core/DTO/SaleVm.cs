@@ -1,17 +1,18 @@
-﻿using System;
+﻿using StockManagementSystem.Core.Domains;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockManagementSystem.Core.Domains
+namespace StockManagementSystem.Core.DTO
 {
-    public class Sale : BaseClass
+    public class SaleVm
     {
-        public Sale()
+        public SaleVm()
         {
-            SaleDetails = new HashSet<SaleDetail>();
+            SaleDetails = new HashSet<SaleDetailVm>();
             DiscountPercent = 0;
             DueAmount = 0;
             OriginalPrice = 0;
@@ -22,11 +23,13 @@ namespace StockManagementSystem.Core.Domains
         [Required]
         public string InvoiceNo { get; set; }
         public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
         public string? CustomerName { get; set; }
         public string? CustomerAddress { get; set; }
+        [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Please Enter Correct Email")]
         public string? CustomerEmail { get; set; }
         [Required]
+        [RegularExpression(@"^(?:\+88|01)?\d{11}$", ErrorMessage = "Invalid Mobile Number")]
+        [Phone]
         public string CustomerPhone { get; set; }
         [Required]
         public char PaymentStatus { get; set; }
@@ -46,7 +49,9 @@ namespace StockManagementSystem.Core.Domains
         [Required]
         public decimal DueAmount { get; set; }
 
-        public virtual ICollection<SaleDetail> SaleDetails { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+        public virtual ICollection<SaleDetailVm> SaleDetails { get; set; }
 
         public decimal CalculatePriceAfterDiscount(decimal originalPrice, decimal discountPercent)
         {
@@ -54,6 +59,5 @@ namespace StockManagementSystem.Core.Domains
             decimal priceAfterDiscount = originalPrice - discountAmount;
             return priceAfterDiscount;
         }
-
     }
 }

@@ -21,5 +21,18 @@ namespace StockManagementSystem.Infrastructure.Repositories
             return await _db.ProductListVm.FromSqlRaw("exec SP_GetAllProducts").ToListAsync();
         }
 
+        public async Task<ProductInfoVm> GetProductInfomationBySp(int productId)
+        {
+            try
+            {
+                var productInfo = await _db.ProductInfoVm.FromSqlRaw("exec SP_GetProductInfoById {0}", productId).ToListAsync();
+                return productInfo.FirstOrDefault() ?? new ProductInfoVm();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        
+        }
     }
 }

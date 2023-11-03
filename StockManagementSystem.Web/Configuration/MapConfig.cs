@@ -23,6 +23,10 @@ namespace StockManagementSystem.Web.Configuration
 
             CreateMap<Product, ProductCreateVm>().ReverseMap();
             CreateMap<Product, UpdateProductVm>().ReverseMap();
+
+
+            CreateMap<Sale, SaleVm>().ReverseMap();
+            CreateMap<SaleDetail, SaleDetailVm>().ReverseMap();
         }
        
     }

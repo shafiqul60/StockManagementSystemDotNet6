@@ -66,5 +66,17 @@ namespace StockManagementSystem.Core.Services
         {
             return await _productRepo.GetAllProductsBySp();
         }
+
+        public async Task<List<Product>> GetActiveProducts()
+        {
+            var list = await _productRepo.GetAllAsync();
+            return list.Where(x => x.IsActive == true).ToList();            
+        }
+
+
+        public async Task<ProductInfoVm> GetProductInfomationBySp(int productId)
+        {
+            return await _productRepo.GetProductInfomationBySp(productId);
+        }
     }
 }
