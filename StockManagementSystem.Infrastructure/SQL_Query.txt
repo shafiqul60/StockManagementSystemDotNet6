@@ -1,0 +1,47 @@
+USE [StockManagementSystem]
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetAllProducts]    Script Date: 11/30/2023 2:42:22 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[SP_GetAllProducts]
+                                AS
+                                BEGIN 
+                                SELECT P.Id, C.CategoryName, P.NAME ProductName, P.Unit, P.Price, P.IdealQuantity, P.IsActive FROM PRODUCTS P
+                                INNER JOIN CATEGORIES C ON P.CATEGORYID = C.ID;     
+                                END;
+
+
+USE [StockManagementSystem]
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetCustomerInfoById]    Script Date: 11/30/2023 2:46:24 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[SP_GetCustomerInfoById]
+    @P_NUMBER VARCHAR(100)
+AS
+BEGIN
+    SELECT NAME, ADDRESS, EMAIL FROM CUSTOMERS WHERE TRIM(ContactNumber) = @P_NUMBER;
+END;
+
+
+
+USE [StockManagementSystem]
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetProductInfoById]    Script Date: 11/30/2023 2:46:36 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[SP_GetProductInfoById]
+    @P_PRODUCTID INT
+AS
+BEGIN
+    SELECT p.Brand, p.Model, p.Unit, p.Code, p.Price, ISNULL(pi.QunetityOnHend, 0) Stock
+    FROM Products p
+    Left JOIN ProductInventories pi ON p.Id = pi.ProductId
+    WHERE p.Id = @P_PRODUCTID;
+END;
