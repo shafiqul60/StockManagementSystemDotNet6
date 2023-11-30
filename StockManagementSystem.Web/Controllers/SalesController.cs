@@ -8,11 +8,14 @@ namespace StockManagementSystem.Web.Controllers
     public class SalesController : Controller
     {
         private readonly IProductService _productService;
+        private readonly ICustomerService _customerService;
         private static DateTime previousDate = DateTime.Now.Date;
         private static int counter = 1;
-        public SalesController(IProductService productService)
+        public SalesController(IProductService productService, ICustomerService customerService)
         {
-            _productService= productService;
+            _productService = productService;
+            _customerService = customerService;
+
         }
         public IActionResult Index()
         {
@@ -38,6 +41,12 @@ namespace StockManagementSystem.Web.Controllers
             return Json(new { Data = productInfo });       
         }
 
+        [HttpGet]
+        public ActionResult getCustomerInfoData(string Number)
+        {
+            var customerInfo = _customerService.GetCustomerInfomationBySp(Number);
+            return Json(new { Data = customerInfo });
+        }
 
 
 
@@ -46,7 +55,7 @@ namespace StockManagementSystem.Web.Controllers
         static string GenerateUniqueInvoiceNo()
         {
             string prefix = "FA-";
-            string currentDate = DateTime.Now.ToString("ddMMyyyy-");
+            string currentDate = DateTime.Now.ToString("ddMMyyyy-S");
             string uniqueNumbers = GenerateUniqueNumbers();
             return $"{prefix}{currentDate}{uniqueNumbers}";
         }

@@ -16,8 +16,8 @@ namespace StockManagementSystem.Core.DTO
             DiscountPercent = 0;
             DueAmount = 0;
             OriginalPrice = 0;
-            PriceAfterDiscount = 0;
-            PaymentAmount = 0;
+            FinalPrice = 0;
+            PaidAmount = 0;
             LessAmount = 0;
         }
         [Required]
@@ -36,28 +36,20 @@ namespace StockManagementSystem.Core.DTO
         [Required]
         public decimal OriginalPrice { get; set; }
 
+        public int DiscountPercent { get; set; }
         [Required]
-        public decimal DiscountPercent { get; set; }
-        [Required]
-        public decimal PriceAfterDiscount { get; set; }
+        public decimal FinalPrice { get; set; }
 
         public decimal LessAmount { get; set; }
 
         [Required]
-        public decimal PaymentAmount { get; set; }
+        public decimal PaidAmount { get; set; }
 
-        [Required]
         public decimal DueAmount { get; set; }
 
         public DateTime CreatedDate { get; set; }
 
         public virtual ICollection<SaleDetailVm> SaleDetails { get; set; }
 
-        public decimal CalculatePriceAfterDiscount(decimal originalPrice, decimal discountPercent)
-        {
-            decimal discountAmount = originalPrice * (discountPercent / 100);
-            decimal priceAfterDiscount = originalPrice - discountAmount;
-            return priceAfterDiscount;
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StockManagementSystem.Core.DTO.SpDTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,6 @@ namespace StockManagementSystem.Core.Domains.IRepositories
     public interface ICustomerRepo : IGenericRepo<Customer>    
     {
         Task<List<Customer>> GetAllActiveCustomer();
+        Task<CustomerInfoVm> GetCustomerInfomationBySp(string number);
     }
 }

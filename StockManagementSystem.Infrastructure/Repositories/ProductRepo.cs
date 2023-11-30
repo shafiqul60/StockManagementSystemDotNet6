@@ -2,6 +2,7 @@
 using StockManagementSystem.Core.Domains;
 using StockManagementSystem.Core.Domains.IRepositories;
 using StockManagementSystem.Core.DTO;
+using StockManagementSystem.Core.DTO.SpDTO;
 using StockManagementSystem.Infrastructure.DbContext;
 
 

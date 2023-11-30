@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StockManagementSystem.Core.Domains;
 using StockManagementSystem.Core.DTO;
+using StockManagementSystem.Core.DTO.SpDTO;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StockManagementSystem.Infrastructure.DbContext
@@ -20,6 +21,7 @@ namespace StockManagementSystem.Infrastructure.DbContext
             //Process2
             builder.Entity<ProductListVm>().HasNoKey().ToView(null);
             builder.Entity<ProductInfoVm>().HasNoKey().ToView(null);
+            builder.Entity<CustomerInfoVm>().HasNoKey().ToView(null);
             //builder.Entity<ProductListVm>().ToView(null);
         }
 
@@ -45,6 +47,7 @@ namespace StockManagementSystem.Infrastructure.DbContext
 
         //Process2
         public DbSet<ProductListVm> ProductListVm { get; set; }
+        public DbSet<CustomerInfoVm> CustomerInfoVm { get; set; }
         public DbSet<ProductInfoVm> ProductInfoVm { get; set; }
     }
 }

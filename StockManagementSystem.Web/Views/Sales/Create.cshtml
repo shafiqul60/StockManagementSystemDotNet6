@@ -20,14 +20,14 @@
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="mb-3">
                         <label asp-for="CustomerName" class="form-label">Customer Name</label>
-                        <input asp-for="CustomerName" class="form-control" />
+                        <input asp-for="CustomerName" id="customerName" class="form-control" />
                         <span asp-validation-for="CustomerName" class="form-text text-danger"></span>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="mb-3">
                         <label asp-for="CustomerAddress" class="form-label">Customer Address</label>
-                        <input asp-for="CustomerAddress" class="form-control" />
+                        <input asp-for="CustomerAddress" id="customerAddress" class="form-control" />
                         <span asp-validation-for="CustomerAddress" class="form-text text-danger"></span>
                     </div>
                 </div>
@@ -37,14 +37,14 @@
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="mb-3">
                         <label asp-for="CustomerEmail" class="form-label">Customer Email</label>
-                        <input asp-for="CustomerEmail" class="form-control" />
+                        <input asp-for="CustomerEmail" id="customerEmail" class="form-control" />
                         <span asp-validation-for="CustomerEmail" class="form-text text-danger"></span>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="mb-3">
                         <label asp-for="CustomerPhone" class="form-label">Customer Phone</label>
-                        <input asp-for="CustomerPhone" class="form-control" />
+                        <input asp-for="CustomerPhone" id="customerPhone" class="form-control" />
                         <span asp-validation-for="CustomerPhone" class="form-text text-danger"></span>
                     </div>
                 </div>
@@ -123,7 +123,8 @@
                 </div>
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="mb-3">
-                        <button type="button" id="btnAddProductData" class="btn btn-primary">Add</button>
+                        <button style="margin-top:30px;" type="button" id="btnAddProductData" class="btn btn-primary">Add Product</button>
+                        <button style="margin-top:30px;" type="button" id="btnUpdateProductData" class="btn btn-primary">Update Product</button>
                     </div>
                 </div>
             </div>
@@ -151,13 +152,15 @@
                         <th scope="col">Model</th>
                         <th scope="col">Unit</th>
                         <th scope="col">Unit Price</th>
-                        <th scope="col">Quantity</th>
+                        <th scope="col">Stock Qty</th>
+                        <th scope="col">Sale Qty</th>
                         <th scope="col">Total Price</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>                  
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -182,8 +185,79 @@
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td>Sub Total</td>
-                        <td><input type="number" id="subTotal" readonly/></td>
+                        <td><input asp-for="OriginalPrice" id="subTotal" class="form-control" readonly/></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Discount %</td>
+                        <td><input asp-for="DiscountPercent" id="discountPercent" class="form-control"/></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Less Amount</td>
+                        <td><input asp-for="LessAmount" id="lessAmount" class="form-control"/></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Final Amount</td>
+                        <td><input asp-for="FinalPrice" id="finalAmount" class="form-control" readonly /></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Paid Amount</td>
+                        <td><input asp-for="PaidAmount" id="paidAmount" class="form-control" /></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Due Amount</td>
+                        <td><input asp-for="DueAmount" id="dueAmount" class="form-control" readonly /></td>
                         <td></td>
                     </tr>
                 </tfoot>

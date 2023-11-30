@@ -1,6 +1,7 @@
 ﻿using StockManagementSystem.Core.Domains;
 using StockManagementSystem.Core.Domains.IRepositories;
 using StockManagementSystem.Core.DTO;
+using StockManagementSystem.Core.DTO.SpDTO;
 using StockManagementSystem.Core.IServices;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,11 @@ namespace StockManagementSystem.Core.Services
            
             return await _customerRepo.DeleteAsync(Id);
            
+        }
+
+        public async Task<CustomerInfoVm> GetCustomerInfomationBySp(string number)
+        {
+            return await _customerRepo.GetCustomerInfomationBySp(number);
         }
     }
 }

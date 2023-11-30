@@ -1,5 +1,6 @@
 ﻿using StockManagementSystem.Core.Domains;
 using StockManagementSystem.Core.DTO;
+using StockManagementSystem.Core.DTO.SpDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace StockManagementSystem.Core.IServices
 {
     public interface ICustomerService 
     {
+        Task<CustomerInfoVm> GetCustomerInfomationBySp(string number);
         Task<bool> CreateCustomer(Customer model);
         Task<List<Customer>> GetAllCustomer();
         Task<List<Customer>> GetAllActiveCustomer();

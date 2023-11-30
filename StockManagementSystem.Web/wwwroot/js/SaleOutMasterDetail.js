@@ -1,9 +1,48 @@
 ﻿var basedURL = window.location.origin;
 var rowSL = 0;
-
+var previousProductName = '';
 
 $(function () {
     $("#txtProductId").select2();
+    $("#btnUpdateProductData").hide();
+
+});
+
+
+$("#customerPhone").focusout(function () {
+
+    $("#customerName").val("");
+    $("#customerAddress").val("");
+    $("#customerEmail").val("");
+
+    var numberPram = $.trim(this.value);
+
+    if (!isNaN(numberPram)) {
+
+        $.ajax({
+            url: basedURL + "/Sales/getCustomerInfoData?number=" + numberPram,
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r.data) {
+
+                    $("#customerName").val(r.data.result.name);
+                    $("#customerAddress").val(r.data.result.address);
+                    $("#customerEmail").val(r.data.result.email);
+                }
+                else {
+                    swal("No data found!", r.d.result, "success");
+                    $(".dummy_cleare_field").val("");
+                }
+            },
+            error: function (er) {
+                $.notify(er.statusText, "error");
+            }
+        });
+    } else {
+        $(".dummy_cleare_field").val("");
+    }
 });
 
 
@@ -16,7 +55,7 @@ $("#txtProductId").change(function () {
     $("#txtProductPrice").val("");
     $("#txtProductStock").val("");
     $("#txtProductSell").val("");
- 
+
 
     var productIdPram = parseInt($.trim(this.value), 10);
 
@@ -73,7 +112,7 @@ $(function () {
         let itemProductSell = $.trim($("#txtProductSell").val());
 
 
-        if (itemProductId == "" || itemProductId == 0)  {
+        if (itemProductId == "" || itemProductId == 0) {
             isValid = false;
             Swal.fire({
                 icon: 'error',
@@ -142,15 +181,16 @@ $(function () {
 
             let tableRow = "<tr class='dummy_row_line_item' id='pi_" + (rowSL + 1) + "_line_item'>";
             tableRow = tableRow + "<td class='dummy_sl_no' style=''> <span>" + (rowSL + 1) + " </span></td>";
-            tableRow = tableRow + "<td class='dummy_item_product'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].ProductId' value='" + itemProductId + "'><span>" + itemProductId + "</span></td>";
-            tableRow = tableRow + "<td class='dummy_item_code'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].ProductName' value='" + itemProductName + "'> <span>" + itemProductName + "</span></td>";
-            tableRow = tableRow + "<td class='dummy_item_price'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].ProductCode' value='" + itemProductCode + "'> <span>" + itemProductCode + "</span></td>";
-            tableRow = tableRow + "<td class='dummy_item_stock'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].ProductBrand' value='" + itemProductBrand + "'> <span>" + itemProductBrand + "</span></td>";
-            tableRow = tableRow + "<td class='dummy_item_stock'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].ProductModel' value='" + itemProductModel + "'> <span>" + itemProductModel + "</span></td>";
-            tableRow = tableRow + "<td class='dummy_item_stock'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].ProductUnit' value='" + itemProductUnit + "'> <span>" + itemProductUnit + "</span></td>";
-            tableRow = tableRow + "<td class='dummy_item_stock'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].UnitPrice' value='" + itemProductPrice + "'> <span>" + itemProductPrice + "</span></td>";
-            tableRow = tableRow + "<td class='dummy_item_send'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].Quantity' value='" + itemProductSell + "'> <span>" + itemProductSell + "</span></td>";
-            tableRow = tableRow + "<td class='dummy_item_total'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].TotalPrice' value='" + totalPrice + "' > <span class='eachTotal'>" + totalPrice + " </span></td>";
+            tableRow = tableRow + "<td class='dummy_item_pId'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].ProductId' value='" + itemProductId + "'><span>" + itemProductId + "</span></td>";
+            tableRow = tableRow + "<td class='dummy_item_pName'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].ProductName' value='" + itemProductName + "'> <span>" + itemProductName + "</span></td>";
+            tableRow = tableRow + "<td class='dummy_item_pCode'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].ProductCode' value='" + itemProductCode + "'> <span>" + itemProductCode + "</span></td>";
+            tableRow = tableRow + "<td class='dummy_item_pBrand'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].ProductBrand' value='" + itemProductBrand + "'> <span>" + itemProductBrand + "</span></td>";
+            tableRow = tableRow + "<td class='dummy_item_pModel'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].ProductModel' value='" + itemProductModel + "'> <span>" + itemProductModel + "</span></td>";
+            tableRow = tableRow + "<td class='dummy_item_pUnit'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].ProductUnit' value='" + itemProductUnit + "'> <span>" + itemProductUnit + "</span></td>";
+            tableRow = tableRow + "<td class='dummy_item_pPrice'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].UnitPrice' value='" + itemProductPrice + "'> <span>" + itemProductPrice + "</span></td>";
+            tableRow = tableRow + "<td class='dummy_item_pStock'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].ProductStock' value='" + itemProductStock + "' ><span>" + itemProductStock + "</span></td>";
+            tableRow = tableRow + "<td class='dummy_item_pQuantity'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].Quantity' value='" + itemProductSell + "'> <span>" + itemProductSell + "</span></td>";
+            tableRow = tableRow + "<td class='dummy_item_pTotal'><input type='hidden' name='SaleDetailVm[" + (rowSL) + "].TotalPrice' value='" + totalPrice + "' > <span class='eachTotal'>" + totalPrice + " </span></td>";
             tableRow = tableRow + "<td class='dummy_model_link'>" + actionLink + "</td>";
             tableRow = tableRow + "</tr>";
             $("#tblLineItemList").append(tableRow);
@@ -159,6 +199,8 @@ $(function () {
 
             var valueSubTotal = getSubTotalAmount();
             $("#subTotal").val(valueSubTotal);
+
+            $("#finalAmount").val(valueSubTotal);
 
             $(".dummy_reset_item_form").val("");
 
@@ -170,120 +212,156 @@ $(function () {
 
 
     $("#btnUpdateProductData").click(function () {
-        debugger;
-        $("#txtProductId").attr("disabled", false);
         var isValid = true;
         var rowId = $(this).attr("row");
 
         let itemProductId = $.trim($("#txtProductId").val());
-        let itemProduct = $.trim($("#txtProductId option:selected").text());
-        let itemProductPrice = $.trim($("#txtProductPrice").val());
+        let itemProductName = $.trim($("#txtProductId option:selected").text());
+
         let itemProductCode = $.trim($("#txtProductCode").val());
-        let itemStock = $.trim($("#txtStock").val());
-        let itemSend = $.trim($("#txtSend").val());
+        let itemProductBrand = $.trim($("#txtProductBrand").val());
+        let itemProductModel = $.trim($("#txtProductModel").val());
+        let itemProductUnit = $.trim($("#txtProductUnit").val());
+        let itemProductPrice = $.trim($("#txtProductPrice").val());
+        let itemProductStock = $.trim($("#txtProductStock").val());
+        let itemProductSell = $.trim($("#txtProductSell").val());
 
-        $(".clsemp").hide();
-        $(".error3").hide();
-        if (itemProductId == "" || itemProductCode == "" || itemStock == "" || itemSend == "") {
+
+        if (itemProductId == "" || itemProductId == 0) {
             isValid = false;
-            if (itemProductId == "") {
-                $(".clsProduct").show();
-            }
-
-            if (itemProductCode == "") {
-                $(".clsCode").show();
-            }
-
-            if (itemStock == "") {
-                $(".clsStock").show();
-            }
-
-            if (itemSend == "") {
-                $(".clsSend").show();
-            }
-
-
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please select the Product First'
+            })
+            return;
         }
-        if (itemStock != "" && itemSend != "") {
-            var StockQuantity = parseInt($.trim($("#txtStock").val()));
-            var Quantity = parseInt($.trim($("#txtSend").val()));
 
-            if (Quantity > StockQuantity) {
+        if (itemProductStock != "" && itemProductSell != "") {
+            var StockQuantity = parseInt(itemProductStock);
+            var SellingQuantity = parseInt(itemProductSell);
+
+            if (SellingQuantity > StockQuantity) {
                 isValid = false;
-                $(".error2").show();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Stock Limit Exists!'
+                })
+                return;
+            }
+
+            if (SellingQuantity <= 0) {
+                isValid = false;
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Selling Input'
+                })
+                return;
             }
         }
+        else {
+            isValid = false;
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Product Stock or Selling Quantity Invalid'
+            })
+            return;
+        }
 
-        //$('#tblLineItemList tbody tr').each(function () {
-        //    var tblProductCode = $.trim($(this).find('td:eq(2)').text());
-        //    if (tblProductCode == itemProductCode) {
-        //        isValid = false;
-        //        $(".error3").show();
-        //    }
-        //});
 
 
+        $('#tblLineItemList tbody tr').each(function () {
+            var tblProductName = $.trim($(this).find('td:eq(2)').text());
+            if (tblProductName == itemProductName) {
+                if (tblProductName != previousProductName) {
+                    isValid = false;
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Item Already Added!'
+                    })
+                    return;
+                } else {
+                    return;
+                }               
+            }        
+        });
+
+        var totalPrice = parseFloat(itemProductPrice * itemProductSell).toFixed(2);
 
         if (isValid) {
 
-            $(rowId).find(".dummy_item_product").find("input").val(itemProductId);
-            $(rowId).find(".dummy_item_product").find("span").text(itemProduct);
+            $(rowId).find(".dummy_item_pId").find("input").val(itemProductId);
+            $(rowId).find(".dummy_item_pId").find("span").text(itemProductId);
 
-            $(rowId).find(".dummy_item_code").find("input").val(itemProductCode);
-            $(rowId).find(".dummy_item_code").find("span").text(itemProductCode);
+            $(rowId).find(".dummy_item_pName").find("input").val(itemProductName);
+            $(rowId).find(".dummy_item_pName").find("span").text(itemProductName);
 
-            $(rowId).find(".dummy_item_stock").find("input").val(itemStock);
-            $(rowId).find(".dummy_item_stock").find("span").text(itemStock);
+            $(rowId).find(".dummy_item_pCode").find("input").val(itemProductCode);
+            $(rowId).find(".dummy_item_pCode").find("span").text(itemProductCode);
 
-            $(rowId).find(".dummy_item_send").find("input").val(itemSend);
-            $(rowId).find(".dummy_item_send").find("span").text(itemSend);
+            $(rowId).find(".dummy_item_pBrand").find("input").val(itemProductBrand);
+            $(rowId).find(".dummy_item_pBrand").find("span").text(itemProductBrand);
 
-            $(rowId).find(".dummy_item_price").find("input").val(itemProductPrice);
-            $(rowId).find(".dummy_item_price").find("span").text(itemProductPrice);
+            $(rowId).find(".dummy_item_pModel").find("input").val(itemProductModel);
+            $(rowId).find(".dummy_item_pModel").find("span").text(itemProductModel);
 
-            $(rowId).find(".dummy_item_total").find("span").text(itemProductPrice * itemSend);
+            $(rowId).find(".dummy_item_pUnit").find("input").val(itemProductUnit);
+            $(rowId).find(".dummy_item_pUnit").find("span").text(itemProductUnit);
 
+            $(rowId).find(".dummy_item_pPrice").find("input").val(itemProductPrice);
+            $(rowId).find(".dummy_item_pPrice").find("span").text(itemProductPrice);
 
-            $(".dummy_reset_item_form").val("");
+            $(rowId).find(".dummy_item_pStock").find("input").val(itemProductStock);
+            $(rowId).find(".dummy_item_pStock").find("span").text(itemProductStock);
+
+            $(rowId).find(".dummy_item_pQuantity").find("input").val(itemProductSell);
+            $(rowId).find(".dummy_item_pQuantity").find("span").text(itemProductSell);
+
+            $(rowId).find(".dummy_item_pTotal").find("input").val(totalPrice);
+            $(rowId).find(".dummy_item_pTotal").find("span").text(totalPrice);
 
             $("#btnUpdateProductData").hide();
-            $("#btnSaveProductData").show();
+            $("#btnAddProductData").show();
         }
 
-        $("#SumTotal").text(getSummation());
-        $("#hdnTotalSum").val(getSummation());
+        var valueSubTotal = getSubTotalAmount();
+        $("#subTotal").val(valueSubTotal);
+
+        $("#finalAmount").val(valueSubTotal);
     })
-
-
 });
 
 
 
-
-
-
 function EditThisProductItem(elem) {
-    $(".clsemp").hide();
-    $("#txtProductId").attr("disabled", true);
+
     let currentRow = $(elem).closest("td").parent("tr").attr("id");
     currentRow = currentRow != "" ? $.trim("#" + currentRow) : "";
 
     if (currentRow == "")
         return false;
 
-    var product = $.trim($(currentRow + " .dummy_item_product").children('input').val());
+    var product = $.trim($(currentRow + " .dummy_item_pId").children('input').val());
 
-    $("#txtProductId").val(product);
+    $("#txtProductId").val(product).trigger("change");
 
-    $("#txtProductPrice").val($.trim($(currentRow + " .dummy_item_price").text()));
-    $("#txtProductCode").val($.trim($(currentRow + " .dummy_item_code").text()));
-    $("#txtStock").val($.trim($(currentRow + " .dummy_item_stock").text()));
-    $("#txtSend").val($.trim($(currentRow + " .dummy_item_send").text()));
-
+    $("#txtProductCode").val($.trim($(currentRow + " .dummy_item_pCode").text()));
+    $("#txtProductBrand").val($.trim($(currentRow + " .dummy_item_pBrand").text()));
+    $("#txtProductModel").val($.trim($(currentRow + " .dummy_item_pModel").text()));
+    $("#txtProductUnit").val($.trim($(currentRow + " .dummy_item_pUnit").text()));
+    $("#txtProductPrice").val($.trim($(currentRow + " .dummy_item_pPrice").text()));
+    $("#txtProductStock").val($.trim($(currentRow + " .dummy_item_pStock").text()));
+    $("#txtProductSell").val($.trim($(currentRow + " .dummy_item_pQuantity").text()));
 
     $("#btnUpdateProductData").attr("row", currentRow);
-    $("#btnSaveProductData").hide();
+    $("#btnAddProductData").hide();
     $("#btnUpdateProductData").show();
+
+    previousProductName = $.trim($(currentRow + " .dummy_item_pName").text());
 }
 
 function RemoveThisProductItem(selector) {
@@ -330,3 +408,98 @@ function getSubTotalAmount() {
     });
     return sum.toFixed(2);
 }
+
+
+
+
+$("#discountPercent").focusout(function () {
+    parseFloat($("#lessAmount").val(0)).toFixed(2);
+    parseFloat($("#paidAmount").val(0)).toFixed(2);
+    parseFloat($("#dueAmount").val(0)).toFixed(2);
+
+    const originalPrice = parseFloat($("#subTotal").val());
+    const discountPercentage = parseFloat($(this).val());
+
+    if (discountPercentage == 0) {
+        $("#finalAmount").val(originalPrice);
+    }
+
+    if (discountPercentage < 0 || discountPercentage > 100) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Invalid Discount Percent'
+        })
+        return;
+    }
+    else {
+
+        if (!isNaN(originalPrice) && !isNaN(discountPercentage)) {
+            const discountedPrice = (originalPrice - (originalPrice * discountPercentage / 100)).toFixed(2);
+            $("#finalAmount").val(discountedPrice);
+        }
+        else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Invalid Input'
+            })
+        }
+    }
+});
+
+
+$("#lessAmount").focusout(function () {
+    const originalPrice = parseFloat($("#subTotal").val());
+    const discountPercentage = $("#discountPercent").val();
+    const finalPrice = $("#finalAmount").val();
+    const lessAmount = parseFloat($(this).val());
+
+
+    if (!isNaN(lessAmount)) {
+        if (discountPercentage > 0) {
+            var result = parseFloat(finalPrice - lessAmount).toFixed(2);
+            $("#finalAmount").val(result);
+        }
+        else {
+            var result = parseFloat(originalPrice - lessAmount).toFixed(2);
+            $("#finalAmount").val(result);
+        }
+    }
+    else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Invalid Input'
+        })
+    }
+});
+
+
+$("#paidAmount").focusout(function () {
+
+    const finalPrice = parseFloat($("#finalAmount").val());
+    const paidAmount = parseFloat($(this).val());
+
+
+    if (!isNaN(paidAmount)) {
+        if (paidAmount > 0) {
+            var result = parseFloat(finalPrice - paidAmount).toFixed(2);
+            $("#dueAmount").val(result);
+        }
+        else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Invalid Amount'
+            })
+        }
+    }
+    else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Invalid Amount'
+        })
+    }
+});

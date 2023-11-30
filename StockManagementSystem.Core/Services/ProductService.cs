@@ -1,6 +1,7 @@
 ﻿using StockManagementSystem.Core.Domains;
 using StockManagementSystem.Core.Domains.IRepositories;
 using StockManagementSystem.Core.DTO;
+using StockManagementSystem.Core.DTO.SpDTO;
 using StockManagementSystem.Core.IServices;
 using System;
 using System.Collections.Generic;

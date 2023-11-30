@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockManagementSystem.Core.DTO
+namespace StockManagementSystem.Core.DTO.SpDTO
 {
     public class ProductInfoVm
     {
